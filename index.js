@@ -51,5 +51,20 @@ app.get('/time', (req, res) => {
     app.get("/movies/delete", (req, res) => {
     res.json({message: "delete"})
 })
+    
+    app.get("/movies/read/by-date", (req, res) => {
+    const sortedByDate = movies.sort((a, b) => a.year - b.year);
+    res.json({status: 200, data: sortedByDate});
+  });
+
+    app.get("/movies/read/by-rating", (req, res) => {
+    const sortedByRating = movies.sort((a, b) => b.rating - a.rating);
+    res.json({status: 200, data: sortedByRating});
+  });
+
+  app.get("/movies/read/by-title", (req, res) => {
+    const sortedByTitle = movies.sort((a,b) => (a.title > b.title) - (b.title > a.title));
+    res.json({ status: 200, data: sortedByTitle });
+})
 
 app.listen(PORT);
