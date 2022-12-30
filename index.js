@@ -67,4 +67,14 @@ app.get('/time', (req, res) => {
     res.json({ status: 200, data: sortedByTitle });
 })
 
+app.get('/movies/read/id/:id', (req, res) => {
+  const id = req.params.id;
+  const movie = movies[id - 1];
+  if (movie) {
+      res.status(200).json({ status: 200, data: movie })
+  } else {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  }
+});
+
 app.listen(PORT);
