@@ -89,6 +89,18 @@ app.get("/movies/add", (req, res) => {
   const newMovie = { title, year, rating }
   movies.push(newMovie)
   res.json({ status: 200, data: movies })
-})
+});
+
+app.get("/movies/delete/:id?", (req, res) => {
+  const id = req.params.id;
+  const movie = movies[id - 1];
+  if (movie) {
+      movies.splice(id, 1)
+      res.json({ status: 200, data: movies })
+  } else {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  }
+  
+});
 
 app.listen(PORT);
