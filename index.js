@@ -36,7 +36,7 @@ app.get('/time', (req, res) => {
     
   });
   
-    app.get("/movies/create", (req, res) => {    
+    app.post("/movies/create", (req, res) => {    
     res.json({message: "create"});
 })
 
@@ -44,11 +44,11 @@ app.get('/time', (req, res) => {
     res.json({status:200, data: movies});
 })
 
-    app.get("/movies/update", (req, res) => {
+    app.patch("/movies/update", (req, res) => {
     res.json({message: "update"});
 })
 
-    app.get("/movies/delete", (req, res) => {
+    app.delete("/movies/delete", (req, res) => {
     res.json({message: "delete"})
 })
     
@@ -77,7 +77,7 @@ app.get('/movies/read/id/:id', (req, res) => {
   }
 });
 
-app.get("/movies/add", (req, res) => {
+app.post("/movies/add", (req, res) => {
 
   const title = req.query.title
   const year = req.query.year
@@ -91,7 +91,7 @@ app.get("/movies/add", (req, res) => {
   res.json({ status: 200, data: movies })
 });
 
-app.get("/movies/delete/:id?", (req, res) => {
+app.delete("/movies/delete/:id?", (req, res) => {
   const id = parseInt(req.params.id);
   const movie = movies[id - 1];
   if (movie) {
@@ -103,7 +103,7 @@ app.get("/movies/delete/:id?", (req, res) => {
   
 });
 
-app.get("/movies/update/:id", (req, res) => {
+app.patch("/movies/update/:id", (req, res) => {
   const id = parseInt(req.params.id);
   const updatedTitle = req.query.title;
   const updatedYear = req.query.year;
