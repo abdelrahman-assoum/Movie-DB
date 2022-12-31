@@ -22,7 +22,7 @@ app.get('/time', (req, res) => {
   });
 
   app.get('/hello/:id?', (req, res) => {
-    const id = req.params.id || 'user';
+    const id = parseInt(req.params.id) || 'user';
     res.json({ status: 200, message: `Hello, ${id}` });
   });
 
@@ -68,7 +68,7 @@ app.get('/time', (req, res) => {
 })
 
 app.get('/movies/read/id/:id', (req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const movie = movies[id - 1];
   if (movie) {
       res.status(200).json({ status: 200, data: movie })
@@ -92,7 +92,7 @@ app.get("/movies/add", (req, res) => {
 });
 
 app.get("/movies/delete/:id?", (req, res) => {
-  const id = req.params.id;
+  const id = parseInt(req.params.id);
   const movie = movies[id - 1];
   if (movie) {
       movies.splice(id, 1)
@@ -102,5 +102,21 @@ app.get("/movies/delete/:id?", (req, res) => {
   }
   
 });
+
+app.get("/movies/update/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedTitle = req.query.title;
+  const updatedYear = req.query.year;
+  const updatedRating = req.query.rating;
+  if (id > movies.length) {
+      res.status(404).json({ status: 404, error: true, message: `the movie ${id} does not exist` })
+  } else {
+      const movie = movies[id - 1]
+      if (updatedTitle) movie.title = updatedTitle;
+      if (updatedRating) movie.rating = updatedRating;
+      if (updatedYear) movie.year = updatedYear;
+      res.json({ status: 200, data: movies })
+  }
+})
 
 app.listen(PORT);
